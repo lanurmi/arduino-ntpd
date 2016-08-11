@@ -51,10 +51,10 @@ bool NtpServer::processOneRequest()
         packet.precision = -21; // ~0.5 microsecond precision.
         packet.rootDelay = 0; //60 * (0xFFFF / 1000); // ~60 milliseconds, TBD
         packet.rootDispersion = 0; //10 * (0xFFFF / 1000); // ~10 millisecond dispersion, TBD
-        packet.referenceId[0] = 'G';
-        packet.referenceId[1] = 'P';
-        packet.referenceId[2] = 'S';
-        packet.referenceId[3] = 0;
+        packet.referenceId[0] = 'L';
+        packet.referenceId[1] = 'O';
+        packet.referenceId[2] = 'C';
+        packet.referenceId[3] = 'L';
         timeSource_.now(&packet.referenceTimestampSeconds, &packet.referenceTimestampFraction);
         packet.originTimestampSeconds = packet.transmitTimestampSeconds;
         packet.originTimestampFraction = packet.transmitTimestampFraction;

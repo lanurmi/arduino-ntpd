@@ -9,7 +9,7 @@
 #if defined(ARDUINO)
 
 #include "Arduino.h"
-#include <TinyGPS.h>
+//#include <TinyGPS.h>
 #include <SoftwareSerial.h>
 #include <SPI.h>
 #include <Ethernet.h>
@@ -18,16 +18,18 @@
 
 #include "config.h"
 #include "NTPServer.h"
-#include "SerialDataSource.h"
-#include "GPSTimeSource.h"
+//#include "SerialDataSource.h"
+//#include "GPSTimeSource.h"
+#include "ChronoDotTimeSource.h"
 #include "NTPPacket.h"
 #include "HTTPServer.h"
 #include "TimeUtilities.h"
 
 #include "HtmlStrings.h"
 
-SerialDataSource dataSource;
-GPSTimeSource timeSource(dataSource);
+//SerialDataSource dataSource;
+//GPSTimeSource timeSource(dataSource);
+ChronoDotTimeSource timeSource;
 NtpServer timeServer(timeSource);
 
 void rootPage(HttpServer *server)
@@ -70,6 +72,7 @@ void timePage(HttpServer *server)
     server->print(COMMON_PAGE_FOOTER);
 }
 
+#if 0
 void positionPage(HttpServer *server)
 {
     server->responseOK();
@@ -85,6 +88,7 @@ void positionPage(HttpServer *server)
     server->print(POSITION_PAGE_FOOTER);
     server->print(COMMON_PAGE_FOOTER);
 }
+#endif
 
 void aboutPage(HttpServer *server)
 {
@@ -95,7 +99,7 @@ void aboutPage(HttpServer *server)
 UrlHandler handlers[] = {
     UrlHandler("/", rootPage),
     UrlHandler("/time", timePage),
-    UrlHandler("/location", positionPage),
+//    UrlHandler("/location", positionPage),
     UrlHandler("/about", aboutPage)
 };
 
@@ -106,12 +110,13 @@ int usingDHCP = 0;
 void setup()
 {
     // Print banner.
-    Serial.begin(115200);
+    Serial.begin(9600);
     Serial.println("ArduinoNTPd starting.");
     
     // Set up network.
 #ifdef NETWORK_USE_DHCP
     usingDHCP = Ethernet.begin(macAddress);
+    Serial.println(Ethernet.localIP());
     if (usingDHCP == 0)
 #endif
     {
@@ -119,7 +124,7 @@ void setup()
         Ethernet.begin(macAddress, ipAddress);
     }
     
-    dataSource.begin();
+    //dataSource.begin();
     
     // NOTE: NTP server must _always_ be initialized first to ensure that it occupies socket 0
     // and thus allow input capture to work properly for grabbing RX time.
@@ -150,6 +155,8 @@ void loop()
   // Renew DHCP lease if needed, etc.
   if (usingDHCP) {
     int m = Ethernet.maintain();
+  
+    Serial.println(m);
   }
 }
 

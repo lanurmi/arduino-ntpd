@@ -12,7 +12,7 @@
 
 // The desired IP address for your time server.
 // IPv4 only due to limitations of the Ethernet library.
-IPAddress ipAddress(192, 168, 0, 100);
+IPAddress ipAddress(192, 168, 7, 3);
 
 // The desired MAC address for your time server.
 // This should not conflict with any other devices on your network!
