@@ -13,6 +13,13 @@
 
 #define CRLF "\r\n"
 
+#define COMMON_PAGE_HEADER ""
+#define TIME_PAGE_HEADER ""
+#define TIME_PAGE_FOOTER ""
+#define COMMON_PAGE_FOOTER ""
+#define ABOUT_PAGE "(C)"
+
+#if 0
 #define COMMON_PAGE_STYLE \
     "body { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt; }" CRLF \
     "a { text-decoration: none; }" CRLF \
@@ -64,5 +71,6 @@
     "<br />" \
     ABOUT_PAGE_FOOTER \
     COMMON_PAGE_FOOTER
-  
+
+#endif
 #endif // HTML_STRINGS_H
